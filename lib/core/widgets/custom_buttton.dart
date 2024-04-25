@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import '../utils/styles.dart';
 
 class CustomButton extends StatelessWidget {
-  CustomButton({super.key, this.onTap, required this.text});
+  CustomButton(
+      {super.key, this.onTap, required this.text, this.isLoading = false});
+  final isLoading;
   void Function()? onTap;
   String text;
   @override
@@ -22,10 +24,12 @@ class CustomButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
           ),
         ),
-        child: Text(
-          text,
-          style: Styles.style22,
-        ),
+        child: isLoading
+            ? const CircularProgressIndicator()
+            : Text(
+                text,
+                style: Styles.style22,
+              ),
       ),
     );
   }

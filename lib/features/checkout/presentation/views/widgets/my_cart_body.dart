@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:payment_app/core/widgets/custom_buttton.dart';
-import 'package:payment_app/core/widgets/payment_method_list_view.dart';
+import 'package:payment_app/features/checkout/data/repos/checkout_repo_impl.dart';
+import 'package:payment_app/features/checkout/presentation/manager/cubit/payment_cubit.dart';
+import 'package:payment_app/features/checkout/presentation/views/widgets/payment_methods_bottom_sheet.dart';
 
 import 'cart_info_item.dart';
 import 'total_price.dart';
@@ -58,34 +61,16 @@ class MyCartViewBody extends StatelessWidget {
               showModalBottomSheet(
                   context: context,
                   builder: (context) {
-                    return const PaymentButtomSheet();
+                    return BlocProvider(
+                      create: (context) => PaymentCubit(CheckoutRepoImpl()),
+                      child: const PaymentButtomSheet(),
+                    );
                   });
             },
           ),
           const SizedBox(
             height: 12,
           )
-        ],
-      ),
-    );
-  }
-}
-
-class PaymentButtomSheet extends StatelessWidget {
-  const PaymentButtomSheet({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const PaymentMethodListView(),
-          const SizedBox(
-            height: 16,
-          ),
-          CustomButton(text: "continue"),
         ],
       ),
     );
