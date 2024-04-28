@@ -54,8 +54,7 @@ class _PaymentButtonSheetState extends State<PaymentButtonSheet> {
                         paymentIntentInputModel: paymentIntentInputModel);
                   },
                   child: PaymentMethodItem(
-                    image:
-                        "assets/png-clipart-credit-card-debit-card-mastercard-payment-card-credit-card-payment-internet.png",
+                    image: "assets/credit-card.png",
                     isActive: indexColor == 0,
                   )),
             ),
@@ -83,7 +82,7 @@ class _PaymentButtonSheetState extends State<PaymentButtonSheet> {
                   },
                   child: PaymentMethodItem(
                     isActive: indexColor == 1,
-                    image: "assets/PayMob_Payments.png",
+                    image: "assets/card-paymob.png",
                   ));
             })
           ],
