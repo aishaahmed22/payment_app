@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:payment_app/core/widgets/custom_buttton.dart';
 import 'package:payment_app/features/checkout/data/repos/checkout_repo_impl.dart';
-import 'package:payment_app/features/checkout/presentation/manager/cubit/payment_cubit.dart';
+import 'package:payment_app/features/checkout/presentation/cubit/paymob_cubit/paymob_cubit.dart';
+import 'package:payment_app/features/checkout/presentation/cubit/stripe_cubit/stripe_cubit.dart';
 import 'package:payment_app/features/checkout/presentation/views/widgets/payment_methods_bottom_sheet.dart';
 
 import 'cart_info_item.dart';
@@ -54,16 +55,20 @@ class MyCartViewBody extends StatelessWidget {
           CustomButton(
             text: "Complete Payment",
             onTap: () {
-              // Navigator.of(context).push(
-              //   MaterialPageRoute(
-              //       builder: (context) => const PaymentDetailsView()),
-              // );
               showModalBottomSheet(
                   context: context,
                   builder: (context) {
-                    return BlocProvider(
-                      create: (context) => PaymentCubit(CheckoutRepoImpl()),
-                      child: const PaymentButtomSheet(),
+                    return MultiBlocProvider(
+                      providers: [
+                        BlocProvider(
+                          create: (context) =>
+                              StripePaymentCubit(CheckoutRepoImpl()),
+                        ),
+                        BlocProvider(
+                          create: (context) => PaymobPaymentCubit(),
+                        ),
+                      ],
+                      child: const PaymentButtonSheet(),
                     );
                   });
             },
